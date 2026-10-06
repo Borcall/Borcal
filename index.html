@@ -95,6 +95,18 @@
         }
         .btn-submit:active { transform: scale(0.98); }
 
+        /* Reklam / Reklam Bannerləri */
+        .promo-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px;
+        }
+        .promo-card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 15px; text-align: center;
+        }
+        .promo-card i { font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 8px; }
+        .promo-card h4 { font-size: 0.9rem; color: white; margin-bottom: 4px; }
+        .promo-card p { font-size: 0.75rem; color: var(--text-sub); }
+
         /* Müraciətlər Vərəqi & Animasiyalı Canlı Siyahı */
         .stat-card {
             background: linear-gradient(135deg, #0284c7, #0369a1);
@@ -129,7 +141,7 @@
         /* Animasiyalı App Store / Google Play Bölməsi */
         .apps-banner {
             background: var(--card-bg); border-radius: 20px; padding: 20px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.08); margin-top: 30px;
+            border: 1px solid rgba(255,255,255,0.08); margin-top: 20px;
         }
         .apps-title { font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: white; }
         .app-buttons { display: flex; gap: 12px; }
@@ -137,7 +149,7 @@
             flex: 1; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.15);
             padding: 12px; border-radius: 12px; color: white; text-decoration: none;
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            transition: all 0.3s ease; animation: glow-pulse 3s infinite alternate;
+            transition: all 0.3s ease; animation: glow-pulse 3s infinite alternate; cursor: pointer;
         }
         @keyframes glow-pulse {
             0% { border-color: rgba(255,255,255,0.15); box-shadow: 0 0 0px transparent; }
@@ -163,7 +175,8 @@
         .nav-item i { font-size: 1.2rem; }
         .nav-item.active { color: var(--accent-blue); }
 
-        #step2, #step3, #step4, #loader1, #loader2 { display: none; }
+        /* Gizli Addımlar */
+        #step2, #step3, #step4, #step5, #loader1, #loader2 { display: none; }
     </style>
 </head>
 <body>
@@ -283,31 +296,55 @@
                 <button type="button" class="btn-submit" onclick="finishProcess()">Çeki Göndər</button>
             </div>
 
-            <!-- STEP 5: BİTDİ -->
+            <!-- STEP 5: BİTDİ (YALNIZ ÖDƏNİŞDƏN SONRA GƏLİR) -->
             <div class="form-card" id="step5" style="text-align: center;">
                 <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: var(--green); margin-bottom: 15px;"></i>
                 <h2>Təbriklər! Uğurla Tamamlandı</h2>
                 <p style="font-size: 0.9rem; color: var(--text-sub); margin-top: 10px;">Ödəniş çeki qəbul edildi. Kredit məbləği <strong>5 dəqiqə ərzində</strong> kartınıza köçürüləcəkdir.</p>
             </div>
 
+            <!-- REKLAM / ÜSTÜNLÜKLƏR BÖLMƏSİ -->
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                    <h4>Sürətli Təsdiq</h4>
+                    <p>Tam onlayn 5 dəqiqəyə hesaba köçürmə</p>
+                </div>
+                <div class="promo-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h4>0% Gizli Ödəniş</h4>
+                    <p>Şəffaf şərtlər və zəmanətli sistem</p>
+                </div>
+                <div class="promo-card">
+                    <i class="fa-solid fa-headset"></i>
+                    <h4>24/7 Dəstək</h4>
+                    <p>Hər an fəaliyyət göstərən mərkəz</p>
+                </div>
+                <div class="promo-card">
+                    <i class="fa-solid fa-percent"></i>
+                    <h4>Aşağı Faiz</h4>
+                    <p>Ölkə üzrə ən sərfəli şərtlər</p>
+                </div>
+            </div>
+
             <!-- Animasiyalı Mobile App Bölməsi -->
             <div class="apps-banner">
                 <div class="apps-title"><i class="fa-solid fa-mobile-screen-button"></i> Mobil Tətbiqimizi Yükləyin</div>
                 <div class="app-buttons">
-                    <a href="#" class="app-btn">
+                    <div class="app-btn" onclick="showAppAlert()">
                         <i class="fa-brands fa-google-play"></i>
                         <div class="app-btn-text"><small>ƏLDƏ EDİN</small><span>Google Play</span></div>
-                    </a>
-                    <a href="#" class="app-btn">
+                    </div>
+                    <div class="app-btn" onclick="showAppAlert()">
                         <i class="fa-brands fa-apple"></i>
                         <div class="app-btn-text"><small>YÜKLƏYİN</small><span>App Store</span></div>
-                    </a>
+                    </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- TAB 2: MÜRACİƏTLƏR (200K CANLI AXIN) -->
+        <!-- TAB 2: MÜRACİƏTLƏR -->
         <div id="tab-requests" class="tab-content">
             <div class="stat-card">
                 <div class="stat-num">200,000+</div>
@@ -316,9 +353,7 @@
 
             <h4 style="margin-bottom: 12px; font-size: 0.95rem; color: var(--text-sub);"><i class="fa-solid fa-arrows-rotate fa-spin" style="color:var(--accent-blue)"></i> Canlı Kredit Köçürmələri</h4>
             <div class="live-feed-box">
-                <div class="feed-container" id="feedList">
-                    <!-- Javascript ilə dolacaq -->
-                </div>
+                <div class="feed-container" id="feedList"></div>
             </div>
         </div>
 
@@ -352,6 +387,10 @@
     </nav>
 
     <script>
+        function showAppAlert() {
+            alert("Tezliklə sizlerle!");
+        }
+
         function switchTab(tabId, elem) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -374,7 +413,6 @@
         function startFirstCheck(e) {
             e.preventDefault();
             
-            // Profil məlumatlarını saxla
             const profileHTML = `
                 <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>Ad Soyad:</strong> ${document.getElementById('uName').value} ${document.getElementById('uSurname').value}</div>
                 <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px;"><strong>Telefon:</strong> ${document.getElementById('uPhone').value}</div>
@@ -436,7 +474,6 @@
             document.getElementById('step5').style.display = 'block';
         }
 
-        // Müraciətlər Vərəqəsi Üçün Təsadüfi Məlumat Generatoru (Maskalanmış)
         const names = ["A****N", "E****N", "R****D", "N****T", "S****M", "T****R", "F****D", "O****R", "K****M", "V****Q"];
         const surnames = ["M*******V", "Ə****V", "H*******V", "Q*******V", "S*******V", "C*******V", "B*******V"];
 
@@ -454,7 +491,7 @@
                 </div>
             `;
         }
-        document.getElementById('feedList').innerHTML = feedHTML + feedHTML; // Təkrar tətbiq edərək sonsuz animasiya
+        document.getElementById('feedList').innerHTML = feedHTML + feedHTML;
     </script>
 </body>
 </html>
